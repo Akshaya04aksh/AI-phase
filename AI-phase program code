@@ -1,0 +1,29 @@
+//Python program to create a diabetes prediction system//
+#Importing the necessary libraries
+import pandas as pd 
+import numpy as np 
+from sklearn.preprocessing import StandardScaler 
+#from sklearn.linear_model  import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.naive_bayes import BernoulliNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+#read the data file
+data = pd.read_csv("/kaggle/input/diabetes-data-set/diabetes.csv")
+data.head()
+data.describe()
+data.isnull().sum()
+data['BMI'] = data['BMI'].replace(0,data['BMI'].mean())
+data['BloodPressure'] = data['BloodPressure'].replace(0,data['BloodPressure'].mean())
+data['Glucose'] = data['Glucose'].replace(0,data['Glucose'].mean())
+data['Insulin'] = data['Insulin'].replace(0,data['Insulin'].mean())
+data['SkinThickness'] = data['SkinThickness'].replace(0,data['SkinThickness'].mean())
+data.describe()
+#now we have dealt with the 0 values and data looks better. But, there still are outliers present in some columns.lets visualize it
+fig, ax = plt.subplots(figsize=(15,10))
+sns.boxplot(data=data, width= 0.5,ax=ax,  fliersize=3)
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
+X_train.shape, X_test.shape
